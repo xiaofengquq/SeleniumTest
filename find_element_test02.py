@@ -118,8 +118,8 @@ class TestCase:
 if __name__ == '__main__':
     testcase = TestCase()
 
-    # testcase.test_id()
-    testcase.test_XPath()
+    testcase.test_id()
+    # testcase.test_XPath()
     # testcase.test_link_text()
     # testcase.test_partial_link_text()
     # testcase.test_name()

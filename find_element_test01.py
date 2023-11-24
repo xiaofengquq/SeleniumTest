@@ -10,14 +10,12 @@ class TestCase(object):
         self.driver = webdriver.Chrome()
 
     def baiduTest(self):
-        driver = webdriver.Chrome()
+        self.driver.get("http://www.baidu.com")
+        self.driver.find_element(By.ID, "kw").send_keys("selenium")
         sleep(1)
-        driver.get("http://www.baidu.com")
-        driver.find_element(By.ID, "kw").send_keys("selenium")
-        sleep(1)
-        driver.find_element(By.ID, "su").click()
+        self.driver.find_element(By.ID, "su").click()
         sleep(3)
-        driver.quit()
+        self.driver.quit()
 
 
 def test1():
