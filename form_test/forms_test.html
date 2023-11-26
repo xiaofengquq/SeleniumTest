@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 字符集声明 -->
+    <meta charset="UTF-8">
+    <!-- 文档标题 -->
+    <title>表单测试</title>
+</head>
+<body>
+
+<!--
+    输入元素 (<input>):
+        <input> 是一个多功能的HTML元素，用于创建各种表单控件。
+        常见的 type 属性有：
+            text: 创建单行文本输入框。
+            password: 创建密码输入框（字符被掩码）。
+            checkbox: 创建用于二进制选择的复选框。
+            radio: 创建用于互斥选择的单选按钮。
+            submit: 创建用于提交表单的提交按钮。
+            file: 创建用于文件上传的文件输入框。
+            button: 创建可点击的按钮。
+
+    选择元素 (<select>):
+        <select> 用于创建下拉列表。它包含一个或多个 <option> 元素，表示列表中的可用选项。
+        <select> 常用属性：
+            name: 指定下拉列表的名称。
+            id: 为元素指定唯一的标识符。
+            <option> 常用属性：
+            value: 指定在提交表单时发送到服务器的值。
+
+    弹窗元素:
+        在HTML中，弹窗通常使用JavaScript创建。常见类型包括：
+            警告弹窗:
+                使用 alert() 创建。
+                显示带有“确定”按钮的简单消息。
+            确认弹窗:
+                使用 confirm() 创建。
+                提供消息和“确定”和“取消”按钮。
+            提示弹窗:
+                使用 prompt() 创建。
+                提示用户输入一些内容。
+-->
+
+<!-- 包含简单 JavaScript 操作的表单 -->
+<!-- 在浏览器地址栏中执行 JavaScript 代码 -->
+<!-- 执行时弹出一个包含 "hello" 文本的提示框 -->
+<form action="javascript:alert('hello')">
+    <!-- text: 单行文本框，用于输入短文本。 -->
+    用户名:
+    <input type="text" name="username" id="username"> <br>
+    <!-- password: 密码输入框，输入的内容会被隐藏。 -->
+    密码:
+    <input type="password" name="pwd" id="pwd"> <br>
+    <!-- 加一个水平线 -->
+    <hr>
+
+    <!--
+        <input> 元素是用于创建各种表单控件的标签。它是一个空元素，通常用于接收用户的输入
+        type="checkbox": 表示这是一个复选框。
+        name="swimming": 该复选框的名字，用于标识表单数据。
+        value="swimming": 复选框的值，当复选框被选中时，将提交的表单数据中包含这个值。
+        <br>: 这是 HTML 的换行标签，用于在页面上创建一个换行，使后续的元素在新的一行显示。
+    -->
+    swimming:
+    <input type="checkbox" name="swimming" value="swimming"><br>
+    reading:
+    <input type="checkbox" name="reading" value="reading"><br>
+    <!-- 加一个水平线 -->
+    <hr>
+    <!--    radio: 单选框，用于在一组选项中选择一个-->
+    <!--  如果需要选项具有排他性，及选了male就不能选female
+        那么两个input元素的name需要相同  -->
+    gender:
+    <input type="radio" name="gender" value="male"><br>
+    <input type="radio" name="gender" value="female"><br>
+
+    <hr>
+
+    <!--
+        <select> 元素用于创建下拉列表，也称为下拉框或选择框。
+        <select> 元素通常包含一个或多个 <option> 元素，表示下拉列表中的选项。
+        用户可以从这些选项中选择一个或多个
+        如果想要将下拉列表从单选变成复选，则需要添加属性 multiple
+    -->
+    province:
+    <select name="province" id="province">
+        <option value="bj">北京</option>
+        <option value="tj">天津</option>
+        <option value="ah">安徽</option>
+    </select>
+    <br><br>
+    <label for="cars">Choose a car:</label>
+    <select id="cars" name="car" multiple>
+        <option value="volvo">沃尔沃</option>
+        <option value="saab">萨博</option>
+        <option value="mercedes">梅赛德斯</option>
+        <option value="audi">奥迪</option>
+    </select>
+    <br><br>
+    <!-- 提交按钮 -->
+    <input type="submit" value="提交" id="submit">
+</form>
+
+</body>
+</html>

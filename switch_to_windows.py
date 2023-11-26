@@ -26,6 +26,4 @@ if __name__ == '__main__':
         for window in windows:
             # 切换到指定窗口
             driver.switch_to.window(window)
-
-            # 等待一秒钟（你可以根据需要进行调整）
             sleep(1)
