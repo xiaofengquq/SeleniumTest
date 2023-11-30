@@ -2,11 +2,10 @@ import os.path
 from time import sleep
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
 
-# 测试 表单复选，单选
+# 测试 下拉框复选，单选
 
 class FormTest03(object):
     def __init__(self):
