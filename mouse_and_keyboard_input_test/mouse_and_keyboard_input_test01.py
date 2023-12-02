@@ -52,9 +52,9 @@ if __name__ == '__main__':
     # 实例化 FormTest07 类并执行测试
     form_test = FormTest07()
     sleep(1)
+    # 移动到多选第二个选项并点击
     element = form_test.driver.find_element(By.XPATH, '/html/body/form/input[8]')
     form_test.ac.move_to_element(element).click().perform()
     sleep(2)
     form_test.test_mouse_input()
-    # 移动到多选第二个按钮并点击
 

@@ -18,15 +18,6 @@ class TestCase(object):
         self.driver.quit()
 
 
-def test1():
-    print("test1 run")
-    import subprocess
-    p = subprocess.Popen(r"C:\Program Files\selenium_driver\chromedriver.exe")
-    sleep(1)
-    p.terminate()
-    p.communicate()
-
-
 def googleTest():
     print("test2 run")
     driver = webdriver.Chrome()
@@ -41,7 +32,6 @@ def googleTest():
 
 
 if __name__ == '__main__':
-    test1()
     testcase = TestCase()
     testcase.baiduTest()
     googleTest()

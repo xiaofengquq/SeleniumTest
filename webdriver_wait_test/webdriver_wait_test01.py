@@ -18,6 +18,7 @@ class FormTest05(object):
         self.driver.get('https://www.google.com')
 
     def test_sleep(self):
+        print('test_sleep run')
         # sleep() 只用在调试中
         # 查找具有 'APjFqb' 属性值的元素
         search = self.driver.find_element(value='APjFqb')
@@ -32,6 +33,7 @@ class FormTest05(object):
         self.driver.quit()
 
     def test_implicitly(self):
+        print('test_implicitly run')
         # 隐式等待，设置等待时间为 5 秒，对整个 WebDriver 对象生效，
         # 一旦设置后，将在查找元素时等待指定的时间
         self.driver.implicitly_wait(5.0)
@@ -48,6 +50,7 @@ class FormTest05(object):
         self.driver.quit()
 
     def test_webdriver_wait(self):
+        print('test_webdriver_wait run')
         # 创建 WebDriverWait 对象，设置最大等待时间为 5 秒
         wait = WebDriverWait(self.driver, 5)
         try:
