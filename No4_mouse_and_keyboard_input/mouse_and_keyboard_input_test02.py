@@ -5,6 +5,8 @@ from selenium.webdriver import ActionChains as AC, Keys
 from selenium.webdriver.common.by import By
 
 
+# 模拟键盘
+
 class FormTest08:
     def __init__(self):
         self.driver = webdriver.Chrome()
@@ -29,4 +31,3 @@ class FormTest08:
 if __name__ == '__main__':
     form_test = FormTest08()
     form_test.test_keyboard_input()
-

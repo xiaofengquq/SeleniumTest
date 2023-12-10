@@ -6,6 +6,8 @@ from selenium.webdriver import ActionChains as AC
 from selenium.webdriver.common.by import By
 
 
+# 模拟鼠标
+
 class FormTest07:
     def __init__(self):
         # 初始化 WebDriver、ActionChains 和 WebDriverWait
@@ -37,9 +39,9 @@ class FormTest07:
     def test_mouse_input(self):
         # 找到需要进行点击、双击、右键单击的元素
         clear = self.driver.find_element(By.NAME, 't1')
-        click = self.driver.find_element(By.XPATH, '/html/body/form/input[3]')
-        double_click = self.driver.find_element(By.XPATH, '/html/body/form/input[2]')
-        right_click = self.driver.find_element(By.XPATH, '/html/body/form/input[4]')
+        click = self.driver.find_element(By.XPATH, '/html/body/No2_form/input[3]')
+        double_click = self.driver.find_element(By.XPATH, '/html/body/No2_form/input[2]')
+        right_click = self.driver.find_element(By.XPATH, '/html/body/No2_form/input[4]')
 
         # 分别执行点击、清空文本框、双击、右键单击操作
         self.perform_action_and_check_text('清空文本框', self.ac.click(clear), '')
@@ -53,8 +55,7 @@ if __name__ == '__main__':
     form_test = FormTest07()
     sleep(1)
     # 移动到多选第二个选项并点击
-    element = form_test.driver.find_element(By.XPATH, '/html/body/form/input[8]')
+    element = form_test.driver.find_element(By.XPATH, '/html/body/No2_form/input[8]')
     form_test.ac.move_to_element(element).click().perform()
     sleep(2)
     form_test.test_mouse_input()
-

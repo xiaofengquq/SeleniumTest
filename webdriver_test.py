@@ -30,7 +30,7 @@ class WebDriverTest(object):
         self.driver.quit()
 
     def test_method(self):
-        element = self.driver.find_element(By.ID, 'APjFqb')  # find_element()方法，用于定位元素
+        element = self.driver.find_element(By.ID, 'APjFqb')  # No1_find_element()方法，用于定位元素
         element.send_keys('selenium')
         element.send_keys(Keys.ENTER)
         sleep(1)

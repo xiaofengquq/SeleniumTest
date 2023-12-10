@@ -4,6 +4,8 @@ from selenium import webdriver
 from selenium.webdriver import Keys
 
 
+# 使用selenium截图网页
+
 class ScreenShotTest:
     def __init__(self):
         self.driver = webdriver.Chrome()

@@ -16,7 +16,7 @@ class FormTest06(object):
 
     def test_wait(self):
         # 点击页面上的按钮
-        self.driver.find_element(By.XPATH, '/html/body/form/input[2]').click()
+        self.driver.find_element(By.XPATH, '/html/body/No2_form/input[2]').click()
 
         # 使用WebDriverWait等待特定条件出现
         wait = WebDriverWait(self.driver, 3)

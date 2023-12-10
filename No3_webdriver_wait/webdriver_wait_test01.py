@@ -72,6 +72,6 @@ if __name__ == '__main__':
     # 创建 FormTest05 实例
     form_test = FormTest05()
     # 调用测试方法
-    # form_test.test_sleep()
-    # form_test.test_implicitly()
+    # No2_form.test_sleep()
+    # No2_form.test_implicitly()
     form_test.test_webdriver_wait()

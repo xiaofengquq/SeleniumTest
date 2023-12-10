@@ -46,6 +46,6 @@ class FormTest04(object):
 
 if __name__ == '__main__':
     form_test = FormTest04()
-    # form_test.test_alert()
-    # form_test.test_confirm()
+    # No2_form.test_alert()
+    # No2_form.test_confirm()
     form_test.test_prompt()

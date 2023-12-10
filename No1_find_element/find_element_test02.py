@@ -13,10 +13,10 @@ class TestCase:
         sleep(1)
         driver.get('http://www.google.com')
         driver.maximize_window()
-        # def find_element(self, by=By.ID, value: Optional[str] = None) -> WebElement:
+        # def No1_find_element(self, by=By.ID, value: Optional[str] = None) -> WebElement:
         # 如果没有传递by的话，默认是By.ID
         search = driver.find_element(By.ID, 'APjFqb')
-        # search = driver.find_element(value='APjFqb') 也可以写成这样
+        # search = driver.No1_find_element(value='APjFqb') 也可以写成这样
         search.send_keys('selenium')
         sleep(1)
         search.send_keys(Keys.ENTER)
@@ -61,7 +61,7 @@ class TestCase:
         driver.quit()
 
     def test_name(self):
-        #   由于用一个name可能对应多个元素，find_element(By.NAME, 'q')并不会全部返回，仅会返回第一个
+        #   由于用一个name可能对应多个元素，No1_find_element(By.NAME, 'q')并不会全部返回，仅会返回第一个
         #   如果想全部获取到，需要使用 find_elements(By.NAME, 'q') 这个方法会返回一个 List[WebElement]
         print('test_name run')
         driver = webdriver.Chrome()
@@ -75,7 +75,7 @@ class TestCase:
         driver.quit()
 
     def test_tag(self):
-        #   find_element(By.TAG_NAME, 'textarea') 这个方法一般很少用，因为tag并不能保证准确定位到元素
+        #   No1_find_element(By.TAG_NAME, 'textarea') 这个方法一般很少用，因为tag并不能保证准确定位到元素
         print('test_tag run')
         driver = webdriver.Chrome()
         driver.get('https://www.google.com')

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- 字符集声明 -->
     <meta charset="UTF-8">
     <!-- 文档标题 -->
     <title>表单测试</title>
 </head>
-<body>
 
-<!--
+<body>
+    <!-- 
     输入元素 (<input>):
         <input> 是一个多功能的HTML元素，用于创建各种表单控件。
         常见的 type 属性有：
@@ -41,79 +42,80 @@
                 提示用户输入一些内容。
 -->
 
-<!-- 包含简单 JavaScript 操作的表单 -->
-<!-- 在浏览器地址栏中执行 JavaScript 代码 -->
-<!-- 执行时弹出一个包含 "hello" 文本的提示框 -->
-<form action="javascript:alert('hello')">
-    <!-- text: 单行文本框，用于输入短文本。 -->
-    用户名:
-    <input type="text" name="username" id="username"> <br>
-    <!-- password: 密码输入框，输入的内容会被隐藏。 -->
-    密码:
-    <input type="password" name="pwd" id="pwd"> <br>
-    <!-- 加一个水平线 -->
-    <hr>
+    <!-- 包含简单 JavaScript 操作的表单 -->
+    <!-- 在浏览器地址栏中执行 JavaScript 代码 -->
+    <!-- 执行时弹出一个包含 "hello" 文本的提示框 -->
+    <form action="javascript:alert('hello')">
+        <!-- text: 单行文本框，用于输入短文本。 -->
+        用户名:
+        <input type="text" name="username" id="username"> <br>
+        <!-- password: 密码输入框，输入的内容会被隐藏。 -->
+        密码:
+        <input type="password" name="pwd" id="pwd"> <br>
+        <!-- 加一个水平线 -->
+        <hr>
 
-    <!--
+        <!--
         <input> 元素是用于创建各种表单控件的标签。它是一个空元素，通常用于接收用户的输入
         type="checkbox": 表示这是一个复选框。
         name="swimming": 该复选框的名字，用于标识表单数据。
         value="swimming": 复选框的值，当复选框被选中时，将提交的表单数据中包含这个值。
         <br>: 这是 HTML 的换行标签，用于在页面上创建一个换行，使后续的元素在新的一行显示。
     -->
-    swimming:
-    <input type="checkbox" name="swimming" value="swimming"><br>
-    reading:
-    <input type="checkbox" name="reading" value="reading"><br>
-    <!-- 加一个水平线 -->
-    <hr>
-    <!--    radio: 单选框，用于在一组选项中选择一个-->
-    <!--  如果需要选项具有排他性，及选了male就不能选female
+        swimming:
+        <input type="checkbox" name="swimming" value="swimming"><br>
+        reading:
+        <input type="checkbox" name="reading" value="reading"><br>
+        <!-- 加一个水平线 -->
+        <hr>
+        <!--    radio: 单选框，用于在一组选项中选择一个-->
+        <!--  如果需要选项具有排他性，及选了male就不能选female
         那么两个input元素的name需要相同  -->
-    gender:
-    <input type="radio" name="gender" value="male"><br>
-    <input type="radio" name="gender" value="female"><br>
+        gender:
+        <input type="radio" name="gender" value="male"><br>
+        <input type="radio" name="gender" value="female"><br>
 
-    <hr>
+        <hr>
 
-    <!--
+        <!--
         <select> 元素用于创建下拉列表，也称为下拉框或选择框。
         <select> 元素通常包含一个或多个 <option> 元素，表示下拉列表中的选项。
         用户可以从这些选项中选择一个或多个
         如果想要将下拉列表从单选变成复选，则需要添加属性 multiple
     -->
-    province:
-    <select name="province" id="province">
-        <option value="bj">北京</option>
-        <option value="tj">天津</option>
-        <option value="ah">安徽</option>
-    </select>
-    <br><br>
-    <label for="cars">Choose a car:</label>
-    <select id="cars" name="car" multiple>
-        <option value="volvo">沃尔沃</option>
-        <option value="saab">萨博</option>
-        <option value="mercedes">梅赛德斯</option>
-        <option value="audi">奥迪</option>
-    </select>
-    <br><br>
+        province:
+        <select name="province" id="province">
+            <option value="bj">北京</option>
+            <option value="tj">天津</option>
+            <option value="ah">安徽</option>
+        </select>
+        <br><br>
+        <label for="cars">Choose a car:</label>
+        <select id="cars" name="car" multiple>
+            <option value="volvo">沃尔沃</option>
+            <option value="saab">萨博</option>
+            <option value="mercedes">梅赛德斯</option>
+            <option value="audi">奥迪</option>
+        </select>
+        <br><br>
 
-    <a href="javascript:alert('警告框')" id="alert">
-        警告框
-    </a><br>
-    <a href="javascript:confirm('确定删除？')" id="confirm">
-        确认框
-    </a><br>
-    <a href="javascript:var age = prompt('请输入年龄');
+        <a href="javascript:alert('警告框')" id="alert">
+            警告框
+        </a><br>
+        <a href="javascript:confirm('确定删除？')" id="confirm">
+            确认框
+        </a><br>
+        <a href="javascript:var age = prompt('请输入年龄');
         if (age !== null) {
             document.write(age);
          }" id="prompt">
-        提示框
-    </a><br>
+            提示框
+        </a><br>
 
-    <!-- 提交按钮 -->
-    <input type="submit" value="提交" id="submit">
-</form>
+        <!-- 提交按钮 -->
+        <input type="submit" value="提交" id="submit">
+    </form>
 
 </body>
+
 </html>

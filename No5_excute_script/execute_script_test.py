@@ -4,6 +4,8 @@ from selenium import webdriver
 from selenium.webdriver import Keys
 
 
+# 使用selenium执行JavaScript脚本
+
 class ExecuteScriptTest01:
     def __init__(self):
         # 初始化Chrome浏览器
