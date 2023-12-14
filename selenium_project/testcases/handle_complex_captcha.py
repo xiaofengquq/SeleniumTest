@@ -1,10 +1,10 @@
-import os.path  # 导入os.path模块
-from time import sleep  # 导入sleep函数
+import os.path
+from time import sleep
 
-import ddddocr  # 导入ddddocr模块
-from PIL import Image  # 导入Image类
-from selenium import webdriver  # 导入webdriver模块
-from selenium.webdriver.common.by import By  # 导入By类
+import ddddocr
+from PIL import Image
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
 class HandleComplexCaptcha:
