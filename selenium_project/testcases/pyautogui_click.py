@@ -27,3 +27,7 @@ def JPress_test():
     rect = check_box.rect
     pyautogui.click(rect['x'] + 10, rect['y'] + 130)
     sleep(3)
+
+
+if __name__ == '__main__':
+    JPress_test()
