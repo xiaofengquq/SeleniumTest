@@ -1,7 +1,12 @@
 import os.path
+import platform
 from time import sleep
 
 import ddddocr
+import win32api
+import win32con
+import win32gui
+import win32print
 from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -18,12 +23,15 @@ class HandleComplexCaptcha:
         driver.get('http://localhost:8080/jpress/user/login')
         driver.maximize_window()
 
+        # 获取当前操作系统的缩放率
+        screen_scale_rate = cls.screen_scale_rate()
+
         # 定位验证码图片元素并计算其位置和大小
         captcha = driver.find_element(value='captcha-img')
-        top_left_x = captcha.location['x']
-        top_left_y = captcha.location['y']
-        width = captcha.size['width']
-        height = captcha.size['height']
+        top_left_x = captcha.location['x'] * screen_scale_rate  # 坐标需要乘以缩放率
+        top_left_y = captcha.location['y'] * screen_scale_rate
+        width = captcha.size['width'] * screen_scale_rate
+        height = captcha.size['height'] * screen_scale_rate
         bottom_right_x = top_left_x + width
         bottom_right_y = top_left_y + height
 
@@ -56,9 +64,22 @@ class HandleComplexCaptcha:
         ocr = ddddocr.DdddOcr()  # 初始化 OCR 工具
         with open(f'{captcha_path}', 'rb') as f:  # 以二进制模式打开验证码图片文件
             img_bytes = f.read()  # 读取图片文件的字节内容
-        res = ocr.classification(img_bytes)  # 使用 OCR 工具识别图片内容
-        print(res)  # 打印识别结果
-        return res  # 返回信息
+        identify_result = ocr.classification(img_bytes)  # 使用 OCR 工具识别图片内容
+        print(identify_result)  # 打印识别结果
+        return identify_result  # 返回信息
+
+    @staticmethod
+    def screen_scale_rate():
+        """获取缩放后的分辨率"""
+        if 'Windows' == platform.system():
+            sX, sY = win32api.GetSystemMetrics(0), win32api.GetSystemMetrics(1)  # 获得屏幕分辨率X轴和Y轴
+            hDC = win32gui.GetDC(0)
+            x = win32print.GetDeviceCaps(hDC, win32con.DESKTOPHORZRES)  # 横向分辨率
+            y = win32print.GetDeviceCaps(hDC, win32con.DESKTOPVERTRES)  # 纵向分辨率
+            screen_scale_rate = round(y / sY, 2)  # 计算缩放比率
+        else:
+            screen_scale_rate = 1
+        return screen_scale_rate  # 返回屏幕缩放比率
 
 
 if __name__ == '__main__':
