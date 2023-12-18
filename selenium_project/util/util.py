@@ -34,27 +34,32 @@ class Util:
 
         # 定位验证码图片元素并计算其位置和大小
         captcha = driver.find_element(value=id_string)
-        top_left_x = captcha.location['x'] * screen_scaling  # 坐标需要乘以缩放率
+
+        # 坐标需要乘以缩放率！！！
+
+        top_left_x = captcha.location['x'] * screen_scaling
         top_left_y = captcha.location['y'] * screen_scaling
         width = captcha.size['width'] * screen_scaling
         height = captcha.size['height'] * screen_scaling
+        # 左顶点的x加上验证码的宽，等于右底点的x
+        # 左顶点的y加上验证码的高，等于右底点的y
         bottom_right_x = top_left_x + width
         bottom_right_y = top_left_y + height
 
-        # 截取完整屏幕截图并裁剪出验证码部分，保存为图片文件
+        # 截取完整屏幕截图，保存为图片文件
         driver.save_screenshot(Util.full_name)
 
         # 保存矩形参数的元组
         # 定义一个矩形区域，左上角坐标为 (top_left_x, top_left_y)，右下角坐标为 (bottom_right_x, bottom_right_y)
         rectangle = (top_left_x, top_left_y, bottom_right_x, bottom_right_y)
 
-        # 使用 PIL 库的 Image.open 方法打开名为 driver.picture_name 的图像，并对其进行裁剪
+        # 使用 PIL 库的 Image.open 方法打开名为 Util.full_name 的图像，并对其进行裁剪
         image = Image.open(Util.full_name).crop(rectangle)
 
         # 创建一个 BytesIO 对象，用于存储图像的二进制数据
         bytesIO = BytesIO()
 
-        # 将裁剪后的图像保存到 BytesIO 对象中
+        # 将裁剪好的验证码流保存到 BytesIO 对象中
         image.save(bytesIO, format='PNG')
 
         # 返回存储了图像二进制数据的 BytesIO 数据流
