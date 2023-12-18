@@ -25,16 +25,15 @@ class Util:
     full_name = os.path.join(folder_path, picture_name)
 
     @staticmethod
-    def take_qr_code(driver):
-        # 启动 Chrome 浏览器并访问登录页面
-        driver.get('http://localhost:8080/jpress/user/login')
+    def take_qr_code(driver, id_string):
+        # 最大化页面（防止获取到的坐标不对
         driver.maximize_window()
 
         # 获取当前操作系统的缩放率
         screen_scaling = Util.get_screen_scaling()
 
         # 定位验证码图片元素并计算其位置和大小
-        captcha = driver.find_element(value='captcha-img')
+        captcha = driver.find_element(value=id_string)
         top_left_x = captcha.location['x'] * screen_scaling  # 坐标需要乘以缩放率
         top_left_y = captcha.location['y'] * screen_scaling
         width = captcha.size['width'] * screen_scaling

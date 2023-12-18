@@ -9,9 +9,11 @@ from selenium_project.util.util import Util
 if __name__ == '__main__':
     # 创建 Chrome WebDriver 实例
     driver = webdriver.Chrome()
+    # 打开登录页
+    driver.get('http://localhost:8080/jpress/user/login')
 
     # 获取登录页面的验证码图片并转换为二进制数据
-    image_byte = Util.take_qr_code(driver)
+    image_byte = Util.take_qr_code(driver, 'captcha-img')
 
     # 使用 OCR 工具识别验证码图片内容
     captcha_string = Util.captcha_to_string(image_byte)
