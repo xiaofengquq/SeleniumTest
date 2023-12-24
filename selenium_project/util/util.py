@@ -25,7 +25,7 @@ class Util:
     full_name = os.path.join(folder_path, picture_name)
 
     @staticmethod
-    def take_qr_code(driver, id_string):
+    def take_qr_code_string(driver, id_string):
         # 最大化页面（防止获取到的坐标不对
         driver.maximize_window()
 
@@ -62,8 +62,8 @@ class Util:
         # 将裁剪好的验证码流保存到 BytesIO 对象中
         image.save(bytesIO, format='PNG')
 
-        # 返回存储了图像二进制数据的 BytesIO 数据流
-        return bytesIO.getvalue()
+        # 返回验证码文本
+        return Util.captcha_to_string(bytesIO.getvalue())
 
     @staticmethod
     def get_screen_scaling():
