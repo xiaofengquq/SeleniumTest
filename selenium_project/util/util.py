@@ -4,7 +4,9 @@ import platform
 import random
 import string
 import time
+import traceback
 from io import BytesIO
+from typing import Type, Tuple
 
 import ddddocr
 import win32api
@@ -12,20 +14,27 @@ import win32con
 import win32gui
 import win32print
 from PIL import Image
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 
 
 class Util:
     # 构建截图文件夹的完整路径，使用 os.path.join 将当前文件的父目录的父目录与 'screenshots' 目录拼接而成
     folder_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'screenshots')
 
+    # 获取当前时间
+    current_time = time.strftime('%Y年%m月%d日 %H-%M-%S')
+    print(f'当前时间：{current_time}')
+
     # 使用当前时间生成图片文件名，格式为 年-月-日 时-分-秒.png
-    picture_name = time.strftime('%Y年%m月%d日 %H-%M-%S') + '.png'
+    picture_name = current_time + '.png'
 
     # 构建完整的文件路径，将截图文件夹路径与图片文件名拼接而成
     full_name = os.path.join(folder_path, picture_name)
 
     @staticmethod
-    def take_qr_code_string(driver, id_string):
+    def get_qr_code_string(driver, captcha: WebElement):
         # 最大化页面（防止获取到的坐标不对
         driver.maximize_window()
 
@@ -33,10 +42,7 @@ class Util:
         screen_scaling = Util.get_screen_scaling()
 
         # 定位验证码图片元素并计算其位置和大小
-        captcha = driver.find_element(value=id_string)
-
         # 坐标需要乘以缩放率！！！
-
         top_left_x = captcha.location['x'] * screen_scaling
         top_left_y = captcha.location['y'] * screen_scaling
         width = captcha.size['width'] * screen_scaling
@@ -147,7 +153,37 @@ class Util:
         # 返回加载的 cookies 对象
         return cookies
 
+    @staticmethod
+    def login(driver, username_str: str, password_str: str, is_captcha_present: bool):
+        # .form-group 和 input[placeholder="请输入验证码"]是后代关系，所以用空格可以找到
+        # .form-control 和 input[placeholder="请输入验证码"]是交集关系，所以连写可以找到
+        # captcha_input_box_info = (By.CSS_SELECTOR, '.form-group input[placeholder="请输入验证码"]')
+        captcha_input_box_info = (By.CSS_SELECTOR, 'input[placeholder="请输入验证码"].form-control')
+        captcha_image_info = (By.CSS_SELECTOR, 'img[src="/jpress/commons/captcha"]')
+        submit_button_info = (By.CSS_SELECTOR, '.btn.btn-primary.btn-block.btn-flat')
+        if is_captcha_present:
+            try:
+                captcha_input_box = driver.find_element(*captcha_input_box_info)
+                captcha_image = driver.find_element(*captcha_image_info)
+                captcha_input_box.send_keys(Util.get_qr_code_string(driver, captcha_image))
+                driver.find_element(By.NAME, 'user').send_keys(username_str)
+                driver.find_element(By.NAME, 'pwd').send_keys(password_str)
+                driver.find_element(*submit_button_info).click()
+            except:
+                traceback.print_exc()
+        else:
+            try:
+                driver.find_element(By.NAME, 'user').send_keys(username_str)
+                driver.find_element(By.NAME, 'pwd').send_keys(password_str)
+                driver.find_element(*submit_button_info).click()
+            except:
+                traceback.print_exc()
+
 
 if __name__ == '__main__':
-    picture_name = time.strftime('%Y年%m月%d日 %H-%M-%S') + '.png'  # 存储完整屏幕截图的文件名
-    print(picture_name)
+    # picture_name = time.strftime('%Y年%m月%d日 %H-%M-%S') + '.png'  # 存储完整屏幕截图的文件名
+    # print(picture_name)
+    driver = webdriver.Chrome()
+    driver.get('http://localhost:8080/jpress/admin/login')
+    Util.login(driver, 'admin', '915366', False)
+    time.sleep(2)

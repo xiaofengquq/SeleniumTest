@@ -1,0 +1,62 @@
+如果css选择器中同时存在多个基础选择器，遵循以下逻辑：
+    他们之间关系是
+    交集：
+        div.clss
+            <div class="clss">这是一个交集的例子</div>
+    并集：
+        div,.class
+            <div>这是一个并集的例子</div>
+            <p class="class">这是一个并集的例子</p>
+    后代：
+        div .class
+            <div>
+              <p class="grandparent">Grandparent</p>
+                <p class="parent">parent</p>
+                    <p class="class">这是一个后代的例子</p>
+            </div>
+    子元素：
+        div>p
+            <div>
+              <p>这是一个子元素的例子</p>
+            </div>
+    兄弟：
+        div+p
+            <div>这是一个兄弟的例子</div>
+            <p>这是一个紧接在<div>后面的兄弟元素</p>
+
+1、标签选择器（Type Selector）:
+    纯字符且不带任何修饰符，代表的是名字为纯字符的标签
+    p：选择所有 <p> 标签。
+    div：选择所有 <div> 标签。
+2、类选择器（Class Selector）:
+    . 后面跟纯字符，代表的是类名
+    .classname：选择所有类名为 classname 下的元素。
+    .btn：选择所有类名为 btn 下的元素。
+3、ID选择器（ID Selector）:
+    # 后面跟纯字符，代表的是id
+    #idname：选择 id 为idname的元素。
+    #myElement：选择 id 为myElement的元素。
+4、属性选择器（Attribute Selector）:
+    [attribute="value"]：选择所有具有指定属性和值的元素。
+    [href]：选择所有具有 href 属性的元素。
+5、后代选择器（Descendant Selector）:
+    使用空格
+    空格：用于选择具有特定类名的元素，无论其位置如何，包括后代元素。
+    element1 element2：选择所有位于 element1 内的 element2 元素。
+    div p：选择所有位于 <div> 内的 <p> 元素。
+6、子元素选择器（Child Selector）:
+    使用 > （大于号）
+    大于号：用于选择直接位于特定元素内的子元素，不包括更深层次的后代。
+    element1 > element2：选择所有直接位于 element1 内的 element2 元素，而不包括更深层次的后代。
+    ul > li：选择所有直接位于 <ul> 内的 <li> 元素。
+7、相邻兄弟选择器（Adjacent Sibling Selector）:
+    element1 + element2：选择紧接在 element1 后面的 element2 元素。
+    h1 + p：选择紧接在 <h1> 后面的 <p> 元素。
+8、通用选择器（Universal Selector）:
+    *：选择文档中的所有元素。
+9、伪类选择器（Pseudo-class Selector）:
+    element:hover：选择鼠标悬停在 element 上的样式。
+    a:hover：选择鼠标悬停在 <a> 标签上的样式。
+10、伪元素选择器（Pseudo-element Selector）:
+    element::before：在 element 元素内容前插入内容。
+    element::after：在 element 元素内容后插入内容
