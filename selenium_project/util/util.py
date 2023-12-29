@@ -158,25 +158,50 @@ class Util:
         # .form-group 和 input[placeholder="请输入验证码"]是后代关系，所以用空格可以找到
         # .form-control 和 input[placeholder="请输入验证码"]是交集关系，所以连写可以找到
         # captcha_input_box_info = (By.CSS_SELECTOR, '.form-group input[placeholder="请输入验证码"]')
+
+        # 定义验证码输入框、验证码图片和提交按钮的选择器
         captcha_input_box_info = (By.CSS_SELECTOR, 'input[placeholder="请输入验证码"].form-control')
         captcha_image_info = (By.CSS_SELECTOR, 'img[src="/jpress/commons/captcha"]')
         submit_button_info = (By.CSS_SELECTOR, '.btn.btn-primary.btn-block.btn-flat')
+        # 如果页面中有验证码
         if is_captcha_present:
             try:
+                # 找到验证码输入框并输入验证码
                 captcha_input_box = driver.find_element(*captcha_input_box_info)
                 captcha_image = driver.find_element(*captcha_image_info)
                 captcha_input_box.send_keys(Util.get_qr_code_string(driver, captcha_image))
+
+                # 输入用户名和密码
                 driver.find_element(By.NAME, 'user').send_keys(username_str)
                 driver.find_element(By.NAME, 'pwd').send_keys(password_str)
-                driver.find_element(*submit_button_info).click()
+
+                # 点击提交按钮
+                submit_button = driver.find_element(*submit_button_info)
+                submit_button.click()
+                time.sleep(1)
+
+                # 如果ddddocr识别有误，再重试一次
+                try:
+                    alert = driver.switch_to.alert
+                    if alert.text == '验证码不正确，请重新输入':
+                        alert.accept()
+                        captcha_input_box.clear()
+                    captcha_image.click()
+                    captcha_input_box.send_keys(Util.get_qr_code_string(driver, captcha_image))
+                    submit_button.click()
+                except:
+                    print('验证码无误')
             except:
+                # 如果出现异常，打印堆栈跟踪
                 traceback.print_exc()
         else:
             try:
+                # 如果没有验证码，直接输入用户名和密码并提交
                 driver.find_element(By.NAME, 'user').send_keys(username_str)
                 driver.find_element(By.NAME, 'pwd').send_keys(password_str)
                 driver.find_element(*submit_button_info).click()
             except:
+                # 如果出现异常，打印堆栈跟踪
                 traceback.print_exc()
 
 
@@ -185,5 +210,5 @@ if __name__ == '__main__':
     # print(picture_name)
     driver = webdriver.Chrome()
     driver.get('http://localhost:8080/jpress/admin/login')
-    Util.login(driver, 'admin', '915366', False)
-    time.sleep(2)
+    Util.login(driver, 'admin', '915366', True)
+

@@ -27,7 +27,7 @@ if __name__ == '__main__':
     AC = ActionChains(driver)
     AC.move_by_offset(1690, 402).click_and_hold().move_by_offset(200, 0).perform()
     # 使用 CSS 选择器找到td标签下，所有具有 'btn btn-default' 类名的按钮
-    # 这里使用空格或者大于号都找到
+    # 这里使用空格或者大于号都能找到
     buttons = driver.find_elements(By.CSS_SELECTOR, 'td>.btn.btn-default')
 
     # 对找到的第一个按钮执行点击操作
