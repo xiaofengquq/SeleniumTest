@@ -41,6 +41,9 @@ class Util:
         # 获取当前操作系统的缩放率
         screen_scaling = Util.get_screen_scaling()
 
+        # 截取完整屏幕截图，保存为图片文件
+        driver.save_screenshot(Util.full_name)
+
         # 定位验证码图片元素并计算其位置和大小
         # 坐标需要乘以缩放率！！！
         top_left_x = captcha.location['x'] * screen_scaling
@@ -51,9 +54,6 @@ class Util:
         # 左顶点的y加上验证码的高，等于右底点的y
         bottom_right_x = top_left_x + width
         bottom_right_y = top_left_y + height
-
-        # 截取完整屏幕截图，保存为图片文件
-        driver.save_screenshot(Util.full_name)
 
         # 保存矩形参数的元组
         # 定义一个矩形区域，左上角坐标为 (top_left_x, top_left_y)，右下角坐标为 (bottom_right_x, bottom_right_y)
@@ -73,6 +73,9 @@ class Util:
 
     @staticmethod
     def get_screen_scaling():
+        # 获取缩放率还有一种更简单的方法
+        driver.execute_script("return window.devicePixelRatio")
+
         """获取Windows缩放率"""
         if 'Windows' == platform.system():
             sX, sY = win32api.GetSystemMetrics(0), win32api.GetSystemMetrics(1)  # 获得屏幕分辨率X轴和Y轴
@@ -206,9 +209,7 @@ class Util:
 
 
 if __name__ == '__main__':
-    # picture_name = time.strftime('%Y年%m月%d日 %H-%M-%S') + '.png'  # 存储完整屏幕截图的文件名
-    # print(picture_name)
     driver = webdriver.Chrome()
     driver.get('http://localhost:8080/jpress/admin/login')
+    driver.maximize_window()
     Util.login(driver, 'admin', '915366', True)
-

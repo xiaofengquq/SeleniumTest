@@ -15,6 +15,8 @@ class TestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.__driver = webdriver.Chrome()
+        cls.__driver.get('http://localhost:8080/jpress/user/register')
+        cls.__driver.maximize_window()
 
     @classmethod
     def tearDownClass(cls):
@@ -27,7 +29,6 @@ class TestCase(unittest.TestCase):
         email_str = Util.get_random_str(11) + '@gmail.com'
         expect = '注册成功，点击确定进行登录。'
 
-        self.__driver.get('http://localhost:8080/jpress/user/register')
         username = self.__driver.find_element(By.NAME, value='username')
         username.send_keys(username_str)
 
@@ -40,9 +41,10 @@ class TestCase(unittest.TestCase):
         confirmPwd = self.__driver.find_element(By.NAME, value='confirmPwd')
         confirmPwd.send_keys(confirmPwd_str)
 
-        captcha = self.__driver.find_element(value='captcha')
-        captcha_string = Util.get_qr_code_string(self.__driver, 'captchaimg')
-        captcha.send_keys(captcha_string)
+        captcha_input_box = self.__driver.find_element(value='captcha')
+        captcha = self.__driver.find_element(value='captchaimg')
+        captcha_string = Util.get_qr_code_string(self.__driver, captcha)
+        captcha_input_box.send_keys(captcha_string)
 
         register_button = self.__driver.find_element(By.XPATH, '/html/body/div[1]/div/div/form/div[6]/div/button')
         register_button.click()
@@ -50,7 +52,6 @@ class TestCase(unittest.TestCase):
         WebDriverWait(self.__driver, 5).until(EC.alert_is_present())
         alert = self.__driver.switch_to.alert
 
-        assert alert.text == expect, (
-                '断言结果与预期不符' + '\n' '断言结果：'f'{alert.text}' + '\n' f'预期：{expect}')
+        self.assertEqual(alert.text, expect, '断言结果与预期不符' + '\n' '断言结果：'f'{alert.text}' + '\n' f'预期：{expect}')
         sleep(3)
         alert.accept()
