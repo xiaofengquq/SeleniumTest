@@ -10,7 +10,6 @@ from selenium_project.util.util import Util
 
 url = None
 url_found = False
-parameters = {}
 except_column = None
 assert_column = None
 status_column = None
@@ -25,11 +24,12 @@ mapping_tables = {
 class DataBuild:
     @staticmethod
     def data_build(sheet_name: str, driver: webdriver) -> test_data_list:
-        global url, url_found, parameters, except_column, assert_column, status_column, keys
+        global url, url_found, except_column, assert_column, status_column, keys
         dir_path = os.path.dirname(os.path.abspath(__file__))
         xls_path = os.path.join(dir_path, 'selenium_test.xls')
         df = pd.read_excel(xls_path, header=None, sheet_name=sheet_name)
         for index, row in df.iterrows():
+            parameters = {}
             if not url_found:
                 if str(row[0]).lower() == 'url':
                     url = row[1]
