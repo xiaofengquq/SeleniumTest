@@ -76,7 +76,10 @@ class DataBuild:
                         params = [param.strip() for param in params]  # 去除每个参数两端的空白字符.
                         if params[-1].endswith(')'):
                             params[-1] = params[-1][:-1]
-                        function = getattr(mapping_tables[class_name], method_name)
+                        try:
+                            function = getattr(mapping_tables[class_name], method_name)
+                        except:
+                            raise Exception('未在指定模块中找到指定方法，请检查Excel')
                         for i, param in enumerate(params):
                             if param == '$driver':
                                 params[i] = driver
