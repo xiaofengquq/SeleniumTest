@@ -137,22 +137,22 @@ class Util:
     @staticmethod
     def get_random_email(length):
         """
-        生成指定长度的随机字符串，包含字母和数字
+        生成指定长度的随机邮箱，包含字母和数字
 
         Args:
-        length (int): 生成的随机字符串的长度
+        length (int): 生成的随机邮箱用户名的长度
 
         Returns:
-        str: 生成的随机字符串
+        str: 生成的随机邮箱
         """
 
         # 定义包含字母和数字的字符集
         characters = string.ascii_letters + string.digits
         # 从字符集中随机选择字符，循环指定长度次数
         random_chars = [random.choice(characters) for _ in range(int(length))]
-        # 将随机字符列表连接成字符串
+        # 将随机字符列表连接成用户名
         random_str = ''.join(random_chars)
-        # 返回生成的随机字符串
+        # 返回生成的随机邮箱
         return random_str + '@gmail.com'
 
     @staticmethod
