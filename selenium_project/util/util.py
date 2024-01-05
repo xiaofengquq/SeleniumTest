@@ -6,7 +6,7 @@ import string
 import time
 import traceback
 from io import BytesIO
-from typing import Type, Tuple
+from typing import Optional
 
 import ddddocr
 import win32api
@@ -18,8 +18,19 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
+mapping_tables = {
+    'By.ID': By.ID,
+    'By.XPATH': By.XPATH,
+    'By.LINK_TEXT': By.LINK_TEXT,
+    'By.PARTIAL_LINK_TEXT': By.PARTIAL_LINK_TEXT,
+    'By.NAME': By.NAME,
+    'By.TAG_NAME': By.TAG_NAME,
+    'By.CSS_SELECTOR': By.CSS_SELECTOR
+}
+
 
 class Util:
+    global mapping_tables
     # 构建截图文件夹的完整路径，使用 os.path.join 将当前文件的父目录的父目录与 'screenshots' 目录拼接而成
     folder_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'screenshots')
 
@@ -34,7 +45,14 @@ class Util:
     full_name = os.path.join(folder_path, picture_name)
 
     @staticmethod
-    def get_qr_code_string(driver, captcha: WebElement):
+    def get_qr_code_string(driver: webdriver, element: Optional[WebElement] = None, by: str = '', value: str = ''):
+        if element is not None:
+            captcha = element
+        else:
+            try:
+                captcha = driver.find_element(mapping_tables[by], value)
+            except:
+                raise Exception('未找到元素，请检查条件')
         # 最大化页面（防止获取到的坐标不对
         driver.maximize_window()
 
@@ -74,7 +92,7 @@ class Util:
     @staticmethod
     def get_screen_scaling():
         # 获取缩放率还有一种更简单的方法
-        driver.execute_script("return window.devicePixelRatio")
+        # driver.execute_script("return window.devicePixelRatio")
 
         """获取Windows缩放率"""
         if 'Windows' == platform.system():
@@ -85,7 +103,7 @@ class Util:
             screen_scaling = round(y / sY, 2)  # 计算缩放比率
         else:
             screen_scaling = 1
-        print(f'当前Windows系统缩放率: {screen_scaling}')
+        # print(f'当前Windows系统缩放率: {screen_scaling}')
         return screen_scaling  # 返回屏幕缩放比率
 
     @staticmethod
@@ -212,4 +230,8 @@ if __name__ == '__main__':
     driver = webdriver.Chrome()
     driver.get('http://localhost:8080/jpress/admin/login')
     driver.maximize_window()
-    Util.login(driver, 'admin', '915366', True)
+    # print(driver.find_element(By.CSS_SELECTOR, 'img').rect)
+    by = 'By.CSS_SELECTOR'
+    value = 'img'
+    print(Util.get_qr_code_string(driver, None, by, value))
+    # Util.login(driver, 'admin', '915366', True)
