@@ -8,13 +8,11 @@ class TestData:
         if parameters is None:
             parameters = {}
         self.parameters = parameters
+        self.is_skip = False
 
-    def get_parameters(self):
-        return self.parameters
-
-    def set_parameters(self, parameters):
-        self.parameters = parameters
+    def get_parameters_value(self, value):
+        return self.parameters[value]
 
     def to_string(self):
         # 使用f-string来格式化对象的状态
-        return f"TestData(id={self.id}, url='{self.url}', expect='{self.expect}', assert_='{self.assert_}', status='{self.status}', parameters={self.parameters})"
+        return f"TestData(id={self.id}, url='{self.url}', expect='{self.expect}', assert_='{self.assert_}', status='{self.status}', is_skip={self.is_skip}, parameters={self.parameters})"
