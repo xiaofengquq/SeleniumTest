@@ -7,7 +7,6 @@ from selenium_project.data.test_data import TestData
 url = None
 url_found = False
 except_column = None
-assert_column = None
 status_column = None
 test_data_list = []
 parameters_column = {}
@@ -17,7 +16,7 @@ keys = []
 class DataRead:
     @staticmethod
     def data_read(sheet_name: str) -> test_data_list:
-        global url, url_found, except_column, assert_column, status_column, keys
+        global url, url_found, except_column, status_column, keys
         dir_path = os.path.dirname(os.path.abspath(__file__))
         xls_path = os.path.join(dir_path, 'selenium_test.xls')
         df = pd.read_excel(xls_path, header=None, sheet_name=sheet_name)
@@ -47,18 +46,15 @@ class DataRead:
                     if key_string.startswith('$'):
                         keys.append(key_string[1:])
                         parameters_column[key_string[1:]] = count
-                    # 如果键不是以$开头，检查是否是expect、assert或status
+                    # 如果键不是以$开头，检查是否是expect或者status
                     else:
                         if key_string.lower() == 'expect':
                             except_column = count
-                        elif key_string.lower() == 'assert':
-                            assert_column = count
                         elif key_string.lower() == 'status':
                             status_column = count
                 continue
             # 第三行开始为参数
             data.url = url
-            data.id = pd.to_numeric(index) - 1
             for key in keys:
                 # 从row字典的parameters_column键对应的列中读取值
                 value = row[parameters_column[key]]
@@ -70,7 +66,6 @@ class DataRead:
                     parameters[key] = value
             data.parameters = parameters
             data.expect = row[except_column]
-            data.assert_ = row[assert_column]
             data.status = row[status_column]
             if data.status == 'skip':
                 data.is_skip = True

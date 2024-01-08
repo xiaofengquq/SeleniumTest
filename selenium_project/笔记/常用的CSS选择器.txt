@@ -23,6 +23,15 @@
         div+p
             <div>这是一个兄弟的例子</div>
             <p>这是一个紧接在<div>后面的兄弟元素</p>
+    伪类：
+        1、通过伪类寻找第n个a元素
+            a:nth-child(3)
+                <div class="link-container">
+                  <a href="#">First Link</a>
+                  <a href="#">Second Link</a>
+                  <a href="#">Third Link</a>
+                  <a href="#">Fourth Link</a>
+                </div>
 
 1、标签选择器（Type Selector）:
     纯字符且不带任何修饰符，代表的是名字为纯字符的标签
