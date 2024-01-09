@@ -1,3 +1,5 @@
+import datetime
+import logging
 import os
 import pickle
 import platform
@@ -6,6 +8,7 @@ import string
 import time
 import traceback
 from io import BytesIO
+from logging import handlers
 from typing import Optional
 
 import ddddocr
@@ -246,13 +249,38 @@ class Util:
                 # 如果出现异常，打印堆栈跟踪
                 traceback.print_exc()
 
+    @staticmethod
+    def get_logger(logger_name='my_logger'):
+        logger = logging.getLogger(logger_name)
+        logger.setLevel(logging.DEBUG)
+
+        rf_handler = handlers.TimedRotatingFileHandler('all.log', when='midnight', interval=1, backupCount=7,
+                                                       atTime=datetime.time(0, 0, 0, 0))
+        rf_handler.setFormatter(logging.Formatter(
+            '%(asctime)s - %(levelname)s - %(message)s'))
+
+        f_handler = logging.FileHandler('error.log')
+        f_handler.setLevel(logging.ERROR)
+        f_handler.setFormatter(logging.Formatter(
+            '%(asctime)s - %(levelname)s - %(filename)s[:%(lineno)d] - %(module)s - %(funcName)s - %(message)s'))
+
+        logger.addHandler(rf_handler)
+        logger.addHandler(f_handler)
+        return logger
+
 
 if __name__ == '__main__':
-    driver = webdriver.Chrome()
-    driver.get('http://localhost:8080/jpress/admin/login')
-    driver.maximize_window()
-    # print(driver.find_element(By.CSS_SELECTOR, 'img').rect)
-    by = 'By.CSS_SELECTOR'
-    value = 'img'
-    print(Util.get_qr_code_string(driver, None, by, value))
-    # Util.login(driver, 'admin', '915366', True)
+    # driver = webdriver.Chrome()
+    # driver.get('http://localhost:8080/jpress/admin/login')
+    # driver.maximize_window()
+    # # print(driver.find_element(By.CSS_SELECTOR, 'img').rect)
+    # by = 'By.CSS_SELECTOR'
+    # value = 'img'
+    # print(Util.get_qr_code_string(driver, None, by, value))
+    # # Util.login(driver, 'admin', '915366', True)
+    logger = Util.get_logger()
+    logger.debug('debug')
+    logger.info('info')
+    logger.warning('warning')
+    logger.error('error')
+    logger.critical('critical')
