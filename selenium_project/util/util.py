@@ -1,3 +1,4 @@
+import base64
 import os
 import pickle
 import platform
@@ -5,10 +6,13 @@ import random
 import string
 import time
 import traceback
+import urllib
 from io import BytesIO
 from typing import Optional
+from urllib.parse import unquote
 
 import ddddocr
+import requests
 import win32api
 import win32con
 import win32gui
@@ -45,7 +49,10 @@ class Util:
     full_name = os.path.join(folder_path, picture_name)
 
     @staticmethod
-    def get_qr_code_string(driver: webdriver, element: Optional[WebElement] = None, by: str = '', value: str = ''):
+    def get_qr_code_string(driver: webdriver, element: Optional[WebElement] = None, by: str = '', value: str = '',
+                           is_not_headless: bool = True):
+        # Windows系统的缩放率默认为1
+        screen_scaling = 1
         if element is not None:
             captcha = element
         else:
@@ -56,8 +63,9 @@ class Util:
         # 最大化页面（防止获取到的坐标不对
         driver.maximize_window()
 
-        # 获取当前操作系统的缩放率
-        screen_scaling = Util.get_screen_scaling()
+        # 如果使用无头浏览器，则不获取Windows系统的缩放率
+        if is_not_headless:
+            screen_scaling = Util.get_screen_scaling()
 
         # 截取完整屏幕截图，保存为图片文件
         driver.save_screenshot(Util.full_name)
@@ -248,11 +256,14 @@ class Util:
 
 
 if __name__ == '__main__':
-    driver = webdriver.Chrome()
-    driver.get('http://localhost:8080/jpress/admin/login')
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('start-maximized')
+    driver = webdriver.Chrome(options)
+    # driver = webdriver.Chrome()
     driver.maximize_window()
-    # print(driver.find_element(By.CSS_SELECTOR, 'img').rect)
-    by = 'By.CSS_SELECTOR'
-    value = 'img'
-    print(Util.get_qr_code_string(driver, None, by, value))
-    # Util.login(driver, 'admin', '915366', True)
+    driver.get('http://localhost:8080/jpress/user/register')
+    captcha = driver.find_element(By.CSS_SELECTOR, 'img')
+    # Util.get_qr_code_string(driver, captcha, is_not_headless=False)
+    print(f'location: {captcha.location}')
+    print(f'size: {captcha.size}')
