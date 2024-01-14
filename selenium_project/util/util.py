@@ -51,8 +51,6 @@ class Util:
     @staticmethod
     def get_qr_code_string(driver: webdriver, element: Optional[WebElement] = None, by: str = '', value: str = '',
                            is_not_headless: bool = True):
-        # Windows系统的缩放率默认为1
-        screen_scaling = 1
         if element is not None:
             captcha = element
         else:
@@ -63,9 +61,12 @@ class Util:
         # 最大化页面（防止获取到的坐标不对
         driver.maximize_window()
 
-        # 如果使用无头浏览器，则不获取Windows系统的缩放率
+        # 如果无头
         if is_not_headless:
+            # 获取当前操作系统的缩放率
             screen_scaling = Util.get_screen_scaling()
+        else:
+            screen_scaling = 1
 
         # 截取完整屏幕截图，保存为图片文件
         driver.save_screenshot(Util.full_name)

@@ -1,0 +1,5 @@
+2024-01-09 17:33:23,312 - DEBUG - log_test.py - 16 - log_test - <module> - debug
+2024-01-09 17:33:23,312 - INFO - log_test.py - 17 - log_test - <module> - info
+2024-01-09 17:33:23,312 - WARNING - log_test.py - 18 - log_test - <module> - warning
+2024-01-09 17:33:23,312 - ERROR - log_test.py - 19 - log_test - <module> - error
+2024-01-09 17:33:23,313 - CRITICAL - log_test.py - 20 - log_test - <module> - critical
