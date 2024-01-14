@@ -1,3 +1,4 @@
+# python 3.8.7
 allure-pytest==2.13.2
 allure-python-commons==2.13.2
 attrs==23.1.0
@@ -6,6 +7,7 @@ cachetools==4.2.1
 certifi==2023.11.17
 cffi==1.16.0
 chardet==4.0.0
+charset-normalizer==3.3.2
 colorama==0.4.6
 coloredlogs==15.0.1
 crcmod==1.7
@@ -38,6 +40,7 @@ openpyxl==3.1.2
 outcome==1.3.0.post0
 packaging==23.2
 pandas==2.0.3
+parameterized==0.9.0
 Pillow==10.1.0
 pluggy==1.3.0
 protobuf==4.25.1
@@ -62,6 +65,7 @@ pytweening==1.0.7
 pytz==2023.3.post1
 pywin32==306
 PyYAML==5.4.1
+requests==2.31.0
 rsa==4.7.2
 selenium==4.15.2
 shadowsocks==2.8.2
