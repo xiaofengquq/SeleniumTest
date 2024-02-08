@@ -1,5 +1,4 @@
-import datetime
-import logging
+import base64
 import os
 import pickle
 import platform
@@ -7,11 +6,13 @@ import random
 import string
 import time
 import traceback
+import urllib
 from io import BytesIO
-from logging import handlers
 from typing import Optional
+from urllib.parse import unquote
 
 import ddddocr
+import requests
 import win32api
 import win32con
 import win32gui
@@ -48,7 +49,8 @@ class Util:
     full_name = os.path.join(folder_path, picture_name)
 
     @staticmethod
-    def get_qr_code_string(driver: webdriver, element: Optional[WebElement] = None, by: str = '', value: str = ''):
+    def get_qr_code_string(driver: webdriver, element: Optional[WebElement] = None, by: str = '', value: str = '',
+                           is_not_headless: bool = True):
         if element is not None:
             captcha = element
         else:
@@ -59,8 +61,12 @@ class Util:
         # 最大化页面（防止获取到的坐标不对
         driver.maximize_window()
 
-        # 获取当前操作系统的缩放率
-        screen_scaling = Util.get_screen_scaling()
+        # 如果无头
+        if is_not_headless:
+            # 获取当前操作系统的缩放率
+            screen_scaling = Util.get_screen_scaling()
+        else:
+            screen_scaling = 1
 
         # 截取完整屏幕截图，保存为图片文件
         driver.save_screenshot(Util.full_name)
@@ -249,38 +255,16 @@ class Util:
                 # 如果出现异常，打印堆栈跟踪
                 traceback.print_exc()
 
-    @staticmethod
-    def get_logger(logger_name='my_logger'):
-        logger = logging.getLogger(logger_name)
-        logger.setLevel(logging.DEBUG)
-
-        rf_handler = handlers.TimedRotatingFileHandler('all.log', when='midnight', interval=1, backupCount=7,
-                                                       atTime=datetime.time(0, 0, 0, 0))
-        rf_handler.setFormatter(logging.Formatter(
-            '%(asctime)s - %(levelname)s - %(message)s'))
-
-        f_handler = logging.FileHandler('error.log')
-        f_handler.setLevel(logging.ERROR)
-        f_handler.setFormatter(logging.Formatter(
-            '%(asctime)s - %(levelname)s - %(filename)s[:%(lineno)d] - %(module)s - %(funcName)s - %(message)s'))
-
-        logger.addHandler(rf_handler)
-        logger.addHandler(f_handler)
-        return logger
-
 
 if __name__ == '__main__':
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('start-maximized')
+    driver = webdriver.Chrome(options)
     # driver = webdriver.Chrome()
-    # driver.get('http://localhost:8080/jpress/admin/login')
-    # driver.maximize_window()
-    # # print(driver.find_element(By.CSS_SELECTOR, 'img').rect)
-    # by = 'By.CSS_SELECTOR'
-    # value = 'img'
-    # print(Util.get_qr_code_string(driver, None, by, value))
-    # # Util.login(driver, 'admin', '915366', True)
-    logger = Util.get_logger()
-    logger.debug('debug')
-    logger.info('info')
-    logger.warning('warning')
-    logger.error('error')
-    logger.critical('critical')
+    driver.maximize_window()
+    driver.get('http://localhost:8080/jpress/user/register')
+    captcha = driver.find_element(By.CSS_SELECTOR, 'img')
+    # Util.get_qr_code_string(driver, captcha, is_not_headless=False)
+    print(f'location: {captcha.location}')
+    print(f'size: {captcha.size}')

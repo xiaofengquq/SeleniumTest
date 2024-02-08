@@ -44,6 +44,11 @@ class DataProcess:
                         # 如果参数是$None，则替换为None
                         elif param == '$None':
                             params[i] = None
+                        # 如果参数是$True，或者$False，则替换为True或False
+                        elif param == '$True':
+                            params[i] = True
+                        elif param == '$False':
+                            params[i] = False
                     # 调用方法，并将结果赋值回parameters字典中
                     test_data.parameters[key] = function(*params)
         # 返回处理完毕的 test_data

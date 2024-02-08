@@ -1,0 +1,2 @@
+1、Chrome Headless 运行时，Windows缩放并不生效，
+    因此要在缩放的电脑上运行无头Chrome和正常Chrome，需要判断，当Chrome是无头的，获取到元素的坐标不能乘以缩放率

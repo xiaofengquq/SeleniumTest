@@ -14,7 +14,11 @@ class TestCase:
 
     def setup_class(self):
         # 每次执行测试前初始化webdriver，并最大化窗口
-        self.__driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        # 使用无头浏览器运行用例
+        options.add_argument('--headless')
+        options.add_argument('--start-maximized')
+        self.__driver = webdriver.Chrome(options)
         self.__driver.maximize_window()
 
     def teardown_class(self):
