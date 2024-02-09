@@ -1,3 +1,4 @@
+import os
 from time import sleep
 import allure
 import pytest
@@ -10,9 +11,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium_project.data.data_process import DataProcess
 from selenium_project.data.data_read import DataRead
 
+
 # TestCase类用于封装测试用例
 class TestCase:
     __driver = None  # 类变量，用于存储webdriver实例
+    dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
+    xls_path = os.path.join(dir_path, 'selenium_test.xls')
 
     def setup_class(self):
         # 每次执行测试前初始化webdriver，并最大化窗口
@@ -25,7 +29,7 @@ class TestCase:
 
     # 使用pytest.mark.parametrize装饰器，参数化测试数据
     @allure.story('修改后台配置')
-    @pytest.mark.parametrize('data', DataRead.data_read('change_op_config'))
+    @pytest.mark.parametrize('data', DataRead.data_read(xls_path, 'change_op_config'))
     def test_change_op_config(self, data):
         # 如果数据标记为跳过，则使用pytest.skip跳过测试
         if data.is_skip:
@@ -45,7 +49,7 @@ class TestCase:
         # 定位登录按钮并点击
         self.__driver.find_element(By.CSS_SELECTOR, 'button[id="loginBtn"').click()
         # 定位并点击操作配置菜单
-        self.__driver.find_element(By.CSS_SELECTOR, 'a[data-key="19"]').click()
+        self.__driver.find_element(By.CSS_SELECTOR, 'a[data1-key="19"]').click()
         # 定位并点击礼品兑换规则页面链接
         self.__driver.find_element(By.CSS_SELECTOR, 'a[href="/gift_redeem/rule/page"]').click()
         # 定位iframe并切换到该iframe

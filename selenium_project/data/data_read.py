@@ -15,10 +15,8 @@ keys = []
 
 class DataRead:
     @staticmethod
-    def data_read(sheet_name: str) -> test_data_list:
+    def data_read(xls_path: str, sheet_name: str) -> test_data_list:
         global url, url_found, except_column, status_column, keys
-        dir_path = os.path.dirname(os.path.abspath(__file__))
-        xls_path = os.path.join(dir_path, 'selenium_test.xls')
         df = pd.read_excel(xls_path, header=None, sheet_name=sheet_name)
         # 遍历Excel
         for index, row in df.iterrows():

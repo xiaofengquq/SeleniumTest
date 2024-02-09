@@ -18,6 +18,6 @@ class GetData:
 
 if __name__ == '__main__':
     dir_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    xls_path = os.path.join(dir_path, 'data', 'selenium_test.xls')
+    xls_path = os.path.join(dir_path, 'data1', 'selenium_test.xls')
     print(xls_path)
     GetData.get_data()

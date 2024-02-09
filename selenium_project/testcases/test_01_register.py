@@ -1,3 +1,5 @@
+import os
+
 import allure
 import pytest
 from selenium import webdriver
@@ -11,6 +13,8 @@ from selenium_project.data.data_read import DataRead
 
 class TestCase:
     __driver = None  # 类变量，用于存储webdriver实例
+    dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
+    xls_path = os.path.join(dir_path, 'selenium_test.xls')
 
     def setup_class(self):
         # 每次执行测试前初始化webdriver，并最大化窗口
@@ -27,7 +31,7 @@ class TestCase:
 
     # 使用pytest.mark.parametrize装饰器，参数化测试数据
     @allure.story('测试注册')
-    @pytest.mark.parametrize('data', DataRead.data_read('register'))
+    @pytest.mark.parametrize('data', DataRead.data_read(xls_path, 'register'))
     def test_register(self, data):
         # 如果数据标记为跳过，则使用pytest.skip跳过测试
         if data.is_skip:

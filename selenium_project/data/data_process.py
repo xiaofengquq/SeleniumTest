@@ -1,3 +1,5 @@
+import os
+
 from selenium import webdriver
 
 from selenium_project.data.data_read import DataRead
@@ -57,7 +59,9 @@ class DataProcess:
 
 if __name__ == '__main__':
     driver = webdriver.Chrome()
-    test_data_list = DataRead.data_read('register')
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    xls_path = os.path.join(dir_path, 'selenium_test.xls')
+    test_data_list = DataRead.data_read(xls_path, 'register')
     for data in test_data_list:
         driver.get(data.url)
         data = DataProcess.data_process(data, driver)

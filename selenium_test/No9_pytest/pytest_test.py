@@ -21,6 +21,6 @@ class TestCase02:  # 定义一个名为TestCase02的类，用于组织测试用�
         return x - 1  # 返回x减1的结果
 
     # 参数化测试
-    @pytest.mark.parametrize('data', [5, 6, 7])  # 使用pytest.mark.parametrize装饰器，为测试方法提供参数化数据
+    @pytest.mark.parametrize('data1', [5, 6, 7])  # 使用pytest.mark.parametrize装饰器，为测试方法提供参数化数据
     def test01(self, data, init):  # 定义一个测试方法test01，该方法接受两个参数：data和init
         assert TestCase02.subtraction(data) == 5  # 断言subtraction方法返回的结果等于5
