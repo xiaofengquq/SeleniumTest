@@ -51,6 +51,14 @@ class TestCase:
         captcha_str = data.get_parameters_value('captcha_str')
         expect = data.expect  # 预期结果
 
+        # 在allure报告中输出测试参数
+        allure.attach(name="URL", body=str(data.url))
+        allure.attach(name="username", body=str(username_str))
+        allure.attach(name="password", body=str(pwd_str))
+        allure.attach(name="confirm_password", body=str(confirmPwd_str))
+        allure.attach(name="email", body=str(email_str))
+        allure.attach(name="expect", body=str(expect))
+
         # 输入用户名
         username = self.__driver.find_element(By.NAME, value='username')
         username.send_keys(username_str)

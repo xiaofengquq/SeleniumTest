@@ -84,7 +84,6 @@ rfc3986==2.0.0
 rich==13.7.0
 rsa==4.7.2
 selenium==4.15.2
-selenium-auto-executor==1.0.1
 shadowsocks==2.8.2
 shellescape==3.8.1
 six==1.16.0
